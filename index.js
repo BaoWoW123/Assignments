@@ -1,4 +1,4 @@
-//Merge sort algorithm using recursion
+//MergeSort algorithm using recursion
 let arr = [2, 6, 1, 3, 8, 9, 1];
 function mergeSort(arr) {
   if (arr.length === 1) {
@@ -30,10 +30,6 @@ function merge(left, right) {
   }
   return result;
 }
-
-
-
-
 
 //Linked list data structure
 class LinkedList {
@@ -88,18 +84,60 @@ class LinkedList {
       return tail;
     }
   }
-  at(index) {}
-  pop() {}
-  contains(value) {}
-  find(value) {}
+  at(index) {
+    let nodeIndex = 1;
+    let current = this.head;
+    while (current) {
+      if (index === nodeIndex) {
+        return current;
+      }
+      nodeIndex++;
+      current = current.nextNode;
+    }
+    return "Out of bounds";
+  }
+  pop() {
+    let current = this.head;
+    let tail;
+    if (current == null) return;
+    while (current.nextNode) {
+      //loops until next node is null
+      tail = current; //Assigns second last node to tail
+      current = current.nextNode;
+    }
+    //tail's next node assigns to null, popping off last node
+    tail.nextNode = null;
+  }
+  contains(value) {
+    let current = this.head;
+    while (current) {
+      if (value === current.value) {
+        return true;
+      }
+      current = current.nextNode;
+    }
+    return false;
+  }
+  find(value) {
+    let current = this.head;
+    let index = 1;
+    while (current) {
+      if (value === current.value) {
+        return index;
+      }
+      index++;
+      current = current.nextNode;
+    }
+    return null;
+  }
   toString() {
     let current = this.head;
     let str = "";
     while (current) {
       str += `${current.value} => `;
       current = current.nextNode;
-      console.log(str);
     }
+    return (str += "null");
   }
 }
 
