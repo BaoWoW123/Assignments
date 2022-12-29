@@ -1,6 +1,6 @@
-
 let array = [1, 7, 4, 23, 8, 3, 5, 9, 67, 65, 34];
 array = array.sort((a, b) => a - b);
+let end = array.length - 1;
 
 class Node {
   constructor(value) {
@@ -9,12 +9,48 @@ class Node {
     this.right = null;
   }
 }
-let start = 0;
-let end = array.length - 1;
 
 class Tree {
   constructor(root = null) {
-    this.root = buildTree(array, start, end);
+    this.root = buildTree(array, 0, end);
+  }
+
+  insert(value) {
+    array.push(value);
+    array = array.sort((a, b) => a - b);
+    end = array.length - 1;
+    this.root = buildTree(array, 0, end);
+    prettyPrint(tree.root);
+  }
+
+  delete(value) {
+    let root = this.root;
+    while (root) {
+      if (root.value === value) {
+        let index = array.indexOf(value);
+        array.splice(index, 1);
+        end = array.length - 1;
+        this.root = buildTree(array, 0, end);
+        return prettyPrint(tree.root);
+      } else if (root.value < value) {
+        root = root.right;
+      } else if (root.value > value) {
+        root = root.left;
+      }
+    }
+  }
+
+  find(value) {
+    let root = this.root;
+    while (root) {
+      if (root.value === value) {
+        return root;
+      } else if (root.value < value) {
+        root = root.right;
+      } else if (root.value > value) {
+        root = root.left;
+      }
+    }
   }
 }
 
@@ -25,6 +61,7 @@ function buildTree(arr, start, end) {
 
   root.left = buildTree(arr, start, mid - 1);
   root.right = buildTree(arr, mid + 1, end);
+
   return root;
 }
 
