@@ -53,6 +53,26 @@ class Tree {
     }
     console.log("hola");
   }
+
+  height(root = this.root) {
+    if (root === null) return 0;
+
+    const leftHeight = this.height(root.left);
+    const rightHeight = this.height(root.right);
+
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+
+  depth(value, root = this.root, count = 0) {
+    if (root === null) return;
+    if (value == root.value) return count;
+    if (value < root.value) {
+      return this.depth(value, root.left, count + 1);
+    }
+    if (value > root.value) {
+      return this.depth(value, root.right, count + 1);
+    }
+  }
 }
 
 function buildTree(arr, start, end) {
@@ -79,6 +99,18 @@ function levelOrder(root) {
     arr.push(root.value);
     queue.shift();
   }
+}
+
+function inorder() {
+  // left, root, right
+}
+
+function preorder() {
+  // root, left, right
+}
+
+function postorder() {
+  // left, right, root
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
