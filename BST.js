@@ -1,5 +1,7 @@
-let array = [1, 7, 4, 23, 8, 3, 5, 9, 67, 65, 34];
-array = array.sort((a, b) => a - b);
+let array = (size) => {
+  return Array.from({ length: size }, () => Math.floor(Math.random() * 100));
+}
+array = array(11)
 let end = array.length - 1;
 
 class Node {
@@ -73,7 +75,48 @@ class Tree {
       return this.depth(value, root.right, count + 1);
     }
   }
+
+  preorder(root = this.root, preArray = []) {
+    //root, left, right
+    if (root == null) return;
+    preArray.push(root.value)
+    this.preorder(root.left, preArray)
+    this.preorder(root.right, preArray)
+    return preArray;
+  }
+
+  inorder(root = this.root, inArray = []) {
+    //left, root, right
+    if (root == null) return;
+    this.inorder(root.left, inArray)
+    inArray.push(root.value)
+    this.inorder(root.right, inArray)
+    return inArray;
+  }
+
+  postorder(root = this.root, postArray = []) {
+    //left,right,root
+    if (root == null) return;
+    this.inorder(root.left, postArray)
+    this.inorder(root.right, postArray)
+    postArray.push(root.value)
+    return postArray;
+  }
+
+  isBalanced(root = this.root, height = 0) {
+    if (root == null) return 0;
+    let leftSubtree = this.isBalanced(root.left, height + 1);
+    let rightSubtree = this.isBalanced(root.right, height + 1);
+    return (Math.abs(rightSubtree - leftSubtree)) < 2 ? true : false;
+    
+  }
+  
+  rebalance() {
+    array = array.sort((a,b) => a - b);
+    return this.root = buildTree(array, 0, array.length-1)
+  }
 }
+
 
 function buildTree(arr, start, end) {
   if (start > end) return null;
@@ -101,17 +144,7 @@ function levelOrder(root) {
   }
 }
 
-function inorder() {
-  // left, root, right
-}
 
-function preorder() {
-  // root, left, right
-}
-
-function postorder() {
-  // left, right, root
-}
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node.right !== null) {
